@@ -17,11 +17,15 @@ const Home = ({ getUsers, addUser, users, isLoading, resetUsers }) => {
     <div>
       <div>
         <button onClick={fetchData}>Load</button>
-        <button onClick={resetUsersList}>Reset</button>
-        {users.length > 0 && <button onClick={addUserToList}>Add</button>}
+        {users.length > 0 && (
+          <>
+            <button onClick={resetUsersList}>Reset</button>
+            <button onClick={addUserToList}>Add</button>
+            <UsersList users={users} />
+          </>
+        )}
       </div>
       <div>{isLoading && <p>is loading..</p>}</div>
-      <div>{users.length > 0 && <UsersList users={users} />}</div>
     </div>
   );
 };
