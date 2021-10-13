@@ -1,24 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+// REDUX
+import { Provider } from "react-redux";
+import rootReducer from "./rootReducer";
+import { applyMiddleware, createStore, compose } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
+// COMPONENTS
+import Home from "./components/Home";
+import Users from "./components/Users/containers";
+import Nav from "./components/Nav";
+// ROUTER
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// STYLES
+import "./App.css";
+
+const middleware = [thunk];
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["users"],
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  persistedReducer,
+  composeEnhancers(applyMiddleware(...middleware))
+);
+
+const persistor = persistStore(store);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <Nav />
+            <Switch>
+              <Route path="/users">
+                <Users />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </PersistGate>
+        </Provider>
+      </div>
+    </Router>
   );
 }
 

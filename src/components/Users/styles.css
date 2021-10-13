@@ -1,0 +1,8 @@
+.usersList {
+    flex-direction: column;
+}
+
+.usersListContainer {
+    min-height: 300px;
+
+}
