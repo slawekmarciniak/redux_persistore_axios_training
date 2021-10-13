@@ -23,7 +23,7 @@ const INITIAL_STATE = {
 
 const config = {
   method: "get",
-  url: "https://randomuser.me/apiid/",
+  url: "https://randomuser.me/api/",
   params: {
     results: 10,
   },
