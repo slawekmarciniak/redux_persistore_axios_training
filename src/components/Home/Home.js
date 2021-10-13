@@ -23,19 +23,19 @@ const Home = ({
   return (
     <div>
       <button onClick={fetchData}>Load</button>
+      {isLoading && <p>is loading..</p>}
+      {isError && (
+        <p>
+          sorry, an error has occured: <span>{errorMessage}</span>
+        </p>
+      )}
       {users.length > 0 && (
         <>
           <button onClick={resetUsersList}>Reset</button>
           <button onClick={addUserToList}>Add</button>
         </>
       )}
-      {isLoading && <p>is loading..</p>}
       {users.length > 0 && <UsersList users={users} />}
-      {isError && (
-        <p>
-          sorry, an error has occured: <span>{errorMessage}</span>
-        </p>
-      )}
     </div>
   );
 };

@@ -19,8 +19,8 @@ const Users = ({ getUsers, users, isLoading, isError, errorMessage }) => {
           sorry, an error has occured: <span>{errorMessage}</span>
         </p>
       )}
-      {users.length > 0 && <UsersList users={users} />}
       {isLoading && <p>isLoading</p>}
+      {users.length > 0 && <UsersList users={users} />}
     </div>
   );
 };
