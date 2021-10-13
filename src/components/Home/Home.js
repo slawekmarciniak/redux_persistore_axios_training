@@ -2,30 +2,40 @@ import { connect } from "react-redux";
 import UsersList from "../Users/components/UsersList";
 import { getUsers, resetUsers } from "./redux";
 
-const Home = ({ getUsers, addUser, users, isLoading, resetUsers }) => {
+const Home = ({
+  getUsers,
+  addUser,
+  users,
+  isLoading,
+  resetUsers,
+  isError,
+  errorMessage,
+}) => {
   const fetchData = () => {
     getUsers();
   };
   const resetUsersList = () => {
     resetUsers();
   };
-
   const addUserToList = () => {
     addUser();
   };
   return (
     <div>
-      <div>
-        <button onClick={fetchData}>Load</button>
-        {users.length > 0 && (
-          <>
-            <button onClick={resetUsersList}>Reset</button>
-            <button onClick={addUserToList}>Add</button>
-            <UsersList users={users} />
-          </>
-        )}
-      </div>
-      <div>{isLoading && <p>is loading..</p>}</div>
+      <button onClick={fetchData}>Load</button>
+      {users.length > 0 && (
+        <>
+          <button onClick={resetUsersList}>Reset</button>
+          <button onClick={addUserToList}>Add</button>
+        </>
+      )}
+      {isLoading && <p>is loading..</p>}
+      {users.length > 0 && <UsersList users={users} />}
+      {isError && (
+        <p>
+          sorry, an error has occured: <span>{errorMessage}</span>
+        </p>
+      )}
     </div>
   );
 };
@@ -34,6 +44,7 @@ const mapStateToProps = (state) => ({
   users: state.users.users,
   isLoading: state.users.isLoading,
   isError: state.users.isError,
+  errorMessage: state.users.errorMessage,
 });
 
 const mapDispatchToProps = (dispatch) => ({

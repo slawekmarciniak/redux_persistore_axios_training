@@ -10,7 +10,7 @@ export const fetchSucceded = (data) => ({
   type: GET_USERS_SUCCEDED,
   playload: data,
 });
-const fetchFailed = () => ({ type: GET_USERS_FAILED });
+const fetchFailed = (data) => ({ type: GET_USERS_FAILED, playload: data });
 export const resetUsers = () => ({ type: RESET_USERS });
 export const addUser = (data) => ({ type: ADD_USER_TO_LIST, playload: data });
 
@@ -18,11 +18,12 @@ const INITIAL_STATE = {
   users: [],
   isLoading: false,
   isError: false,
+  errorMessage: "",
 };
 
 const config = {
   method: "get",
-  url: "https://randomuser.me/api/",
+  url: "https://randomuser.me/apiid/",
   params: {
     results: 10,
   },
@@ -39,7 +40,9 @@ export const getUsers = (addOnlyOneUser = false) => {
         }
         dispatch(fetchSucceded(response.data.results));
       })
-      .catch((err) => dispatch(fetchFailed()));
+      .catch((err) => {
+        dispatch(fetchFailed(err.message));
+      });
   };
 };
 
@@ -50,6 +53,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading: true,
         isError: false,
+        errorMessage: "",
       });
     case GET_USERS_SUCCEDED:
       return (state = {
@@ -57,17 +61,20 @@ export default function usersReducer(state = INITIAL_STATE, action) {
         users: action.playload,
         isLoading: false,
         isError: false,
+        errorMessage: "",
       });
     case GET_USERS_FAILED:
       return (state = {
         ...state,
         isLoading: false,
         isError: true,
+        errorMessage: action.playload,
       });
     case RESET_USERS:
       return (state = {
         ...state,
         users: [],
+        errorMessage: "",
       });
     case ADD_USER_TO_LIST:
       return (state = {
@@ -75,6 +82,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
         users: [action.playload, ...state.users],
         isLoading: false,
         isError: false,
+        errorMessage: "",
       });
     default:
       return state;
