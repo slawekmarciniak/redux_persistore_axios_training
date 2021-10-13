@@ -12,7 +12,7 @@ export const fetchSucceded = (data) => ({
 });
 const fetchFailed = () => ({ type: GET_USERS_FAILED });
 export const resetUsers = () => ({ type: RESET_USERS });
-export const addUser = () => ({ type: ADD_USER_TO_LIST });
+export const addUser = (data) => ({ type: ADD_USER_TO_LIST, playload: data });
 
 const INITIAL_STATE = {
   users: [],
@@ -28,11 +28,15 @@ const config = {
   },
 };
 
-export const getUsers = () => {
+export const getUsers = (add = false) => {
   return (dispatch) => {
     dispatch(fetchRequested());
     axios(config)
       .then((response) => {
+        if (add) {
+          dispatch(addUser(response.data.results[0]));
+          return;
+        }
         dispatch(fetchSucceded(response.data.results));
       })
       .catch((err) => dispatch(fetchFailed()));
@@ -64,6 +68,13 @@ export default function usersReducer(state = INITIAL_STATE, action) {
       return (state = {
         ...state,
         users: [],
+      });
+    case ADD_USER_TO_LIST:
+      return (state = {
+        ...state,
+        users: [action.playload, ...state.users],
+        isLoading: false,
+        isError: false,
       });
     default:
       return state;
