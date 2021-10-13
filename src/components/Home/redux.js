@@ -28,12 +28,12 @@ const config = {
   },
 };
 
-export const getUsers = (add = false) => {
+export const getUsers = (addOnlyOneUser = false) => {
   return (dispatch) => {
     dispatch(fetchRequested());
     axios(config)
       .then((response) => {
-        if (add) {
+        if (addOnlyOneUser) {
           dispatch(addUser(response.data.results[0]));
           return;
         }
