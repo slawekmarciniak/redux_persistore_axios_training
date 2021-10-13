@@ -33,9 +33,9 @@ const Home = ({
         <>
           <button onClick={resetUsersList}>Reset</button>
           <button onClick={addUserToList}>Add</button>
+          <UsersList users={users} />
         </>
       )}
-      {users.length > 0 && <UsersList users={users} />}
     </div>
   );
 };
