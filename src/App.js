@@ -1,10 +1,9 @@
 // REDUX
 import { Provider } from "react-redux";
-import rootReducer from "./rootReducer";
+import persistedReducer from "./rootReducer";
 import { applyMiddleware, createStore, compose } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 // COMPONENTS
 import Home from "./components/Home";
@@ -16,20 +15,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 const middleware = [thunk];
-
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["users"],
-};
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   persistedReducer,
   composeEnhancers(applyMiddleware(...middleware))
 );
-
 const persistor = persistStore(store);
 
 function App() {
