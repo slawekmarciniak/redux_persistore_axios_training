@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import UsersList from "../Users/components/UsersList";
+import Button from "@mui/material/Button";
 import { getUsers, resetUsers } from "./redux";
 
 const Home = ({
@@ -20,22 +21,36 @@ const Home = ({
   const addUserToList = () => {
     addUser();
   };
+
+  const isUsersListReady = users.length > 0;
   return (
     <div>
-      <button onClick={fetchData}>Load</button>
+      <div className="buttonsContainer">
+        <Button variant="contained" color="secondary" onClick={fetchData}>
+          Load
+        </Button>
+        {isUsersListReady && (
+          <>
+            <Button variant="contained" color="error" onClick={resetUsersList}>
+              Reset
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={addUserToList}
+            >
+              Add
+            </Button>{" "}
+          </>
+        )}
+      </div>
       {isLoading && <p>is loading..</p>}
       {isError && (
         <p>
           sorry, an error has occured: <span>{errorMessage}</span>
         </p>
       )}
-      {users.length > 0 && (
-        <>
-          <button onClick={resetUsersList}>Reset</button>
-          <button onClick={addUserToList}>Add</button>
-          <UsersList users={users} />
-        </>
-      )}
+      {isUsersListReady && <UsersList users={users} />}
     </div>
   );
 };
