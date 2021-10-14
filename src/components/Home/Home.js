@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import UsersList from "../Users/components/UsersList";
 import Button from "@mui/material/Button";
 import { getUsers } from "../../api/usersApi";
-import { resetUsers } from "../../actions/usersActions";
+import { resetUsers } from "../../redux/actions/usersActions";
 
 const Home = ({
   getUsers,

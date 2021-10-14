@@ -4,7 +4,7 @@ import {
   addUser,
   fetchSucceded,
   fetchFailed,
-} from "../actions/usersActions";
+} from "../redux/actions/usersActions";
 
 const config = {
   method: "get",

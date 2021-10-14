@@ -2,7 +2,7 @@
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import store from "./store/store";
+import store from "./redux/store/store";
 // COMPONENTS
 import Home from "./components/Home";
 import Users from "./components/Users/containers";
