@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { getUsers } from "../../Home/redux";
+import { getUsers } from "../../../api/usersApi";
 
 import UsersList from "../components/UsersList";
 import "../styles.css";

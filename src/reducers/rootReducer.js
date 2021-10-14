@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import usersReducer from "./components/Home/redux";
+import usersReducer from "./userReducer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
