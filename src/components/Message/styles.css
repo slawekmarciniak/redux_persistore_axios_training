@@ -1,0 +1,17 @@
+.messageContainer {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    border-radius: 10px;
+
+}
+
+.messageContainer div {
+    position: absolute;
+    width: 300px;
+    margin-top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    border-radius: 3px;
+}

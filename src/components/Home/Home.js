@@ -3,6 +3,7 @@ import UsersList from "../Users/components/UsersList";
 import Button from "@mui/material/Button";
 import { getUsers } from "../../api/usersApi";
 import { resetUsers } from "../../redux/actions/usersActions";
+import { showMessage } from "../../redux/actions/messageActions";
 
 const Home = ({
   getUsers,
@@ -12,14 +13,26 @@ const Home = ({
   resetUsers,
   isError,
   errorMessage,
+  showMessage,
 }) => {
+  if (isLoading) {
+    showMessage("info", "loading");
+  } else if (isError) {
+    showMessage("danger", errorMessage);
+  } else {
+    showMessage("", "");
+  }
   const fetchData = () => {
     getUsers();
   };
   const resetUsersList = () => {
-    resetUsers();
+    showMessage("warning", "users list is cleared");
+    setTimeout(() => {
+      resetUsers();
+    }, 1000);
   };
   const addUserToList = () => {
+    showMessage("info", "adding user");
     addUser();
   };
 
@@ -45,12 +58,6 @@ const Home = ({
           </>
         )}
       </div>
-      {isLoading && <p>is loading..</p>}
-      {isError && (
-        <p>
-          sorry, an error has occured: <span>{errorMessage}</span>
-        </p>
-      )}
       {isUsersListReady && <UsersList users={users} />}
     </div>
   );
@@ -67,6 +74,13 @@ const mapDispatchToProps = (dispatch) => ({
   getUsers: () => dispatch(getUsers()),
   addUser: () => dispatch(getUsers(true)),
   resetUsers: () => dispatch(resetUsers()),
+  showMessage: (type, message) =>
+    dispatch(
+      showMessage({
+        type,
+        message,
+      })
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
