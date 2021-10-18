@@ -25,7 +25,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
     case GET_USERS_SUCCEDED:
       return (state = {
         ...state,
-        users: action.playload,
+        users: action.payload,
         isLoading: false,
         isError: false,
         errorMessage: "",
@@ -35,7 +35,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.playload,
+        errorMessage: action.payload,
       });
     case RESET_USERS:
       return (state = {
@@ -46,7 +46,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
     case ADD_USER_TO_LIST:
       return (state = {
         ...state,
-        users: [action.playload, ...state.users],
+        users: [action.payload, ...state.users],
         isLoading: false,
         isError: false,
         errorMessage: "",

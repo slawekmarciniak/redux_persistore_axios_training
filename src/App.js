@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import Home from "./components/Home";
 import Users from "./components/Users/containers";
 import Nav from "./components/Nav";
@@ -6,12 +6,19 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Message from "./components/Message";
 
-function App({ type, message }) {
+function App() {
+  const messageTypeSelector = (state) =>
+    state.message.message[0] ? state.message.message[0].type : null;
+  const messageSelector = (state) =>
+    state.message.message[0].message ? state.message.message[0].message : null;
+
   return (
     <Router>
       <div className="App">
         <Nav />
-        {message && <Message type={type} message={message} />}
+        {messageSelector && (
+          <Message type={messageTypeSelector} message={messageSelector} />
+        )}
         <Switch>
           <Route path="/users">
             <Users />
@@ -25,10 +32,16 @@ function App({ type, message }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  type: state.message.message[0].type,
-  message: state.message.message[0].message,
-  isLoading: state.users.isLoading,
-});
+// const messageTypeSelector = (state) =>
+//   state.message.message[0] ? state.message.message[0].type : null;
+// const messageSelector = (state) =>
+//   state.message.message[0].message ? state.message.message[0].message : null;
+// const isLoadingSelector = (state) => state.users.isLoading;
 
-export default connect(mapStateToProps)(App);
+// const mapStateToProps = (state) => ({
+//   type: messageTypeSelector(state),
+//   message: messageSelector(state),
+//   isLoading: isLoadingSelector(state),
+// });
+
+export default App;
