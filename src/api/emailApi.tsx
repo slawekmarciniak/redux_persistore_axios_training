@@ -1,3 +1,6 @@
+const apiEndpoint: any = process.env.REACT_APP_API_ENDPOINT;
+console.log(apiEndpoint);
+
 type Body = {
   subject: string;
   emailText: string;
@@ -21,5 +24,5 @@ export const sendEmail = (body: Body): void => {
     body: JSON.stringify(body),
   };
 
-  fetch("https://enlb3pvyelah.x.pipedream.net", options);
+  fetch(apiEndpoint, options);
 };
