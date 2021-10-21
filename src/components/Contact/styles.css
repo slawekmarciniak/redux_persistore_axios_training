@@ -1,0 +1,19 @@
+.formContainer {
+    width: 440px;
+    margin: 50px auto;
+    
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e1dfff;
+    padding: 20px;
+}
+
+.errorInfo {
+    font-size: 10px;
+    color: red;
+    padding: 10px;
+}
