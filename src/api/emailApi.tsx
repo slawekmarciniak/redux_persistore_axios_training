@@ -1,5 +1,4 @@
 const apiEndpoint: any = process.env.REACT_APP_API_ENDPOINT;
-console.log(apiEndpoint);
 
 type Body = {
   subject: string;

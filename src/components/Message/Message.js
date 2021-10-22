@@ -19,6 +19,10 @@ const Message = ({ type, message, showMessage }) => {
       }, 2000);
     };
     openMessage();
+    return () => {
+      setOpen(false);
+      showMessage("", "");
+    };
   }, [showMessage]);
 
   const handleClose = () => {

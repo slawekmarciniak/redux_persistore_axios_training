@@ -41,4 +41,4 @@ const mapStateToProps = (state) => ({
   isLoading: isLoadingSelector(state),
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, null)(App);

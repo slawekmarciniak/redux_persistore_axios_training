@@ -15,7 +15,7 @@ const Users = ({
   showMessage,
 }) => {
   useEffect(() => {
-    if (!users.length) {
+    if (users.length < 1) {
       getUsers();
     }
   }, [getUsers, users.length]);
@@ -27,7 +27,7 @@ const Users = ({
   return (
     <div>
       <h4 className="users">Users:</h4>
-      {users.length && <UsersList users={users} />}
+      {users.length > 0 && <UsersList users={users} />}
     </div>
   );
 };

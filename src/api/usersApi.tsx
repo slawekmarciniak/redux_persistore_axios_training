@@ -6,7 +6,15 @@ import {
   fetchFailed,
 } from "../redux/actions/usersActions";
 
-const config = {
+interface ConfigType {
+  method: "get";
+  url: string;
+  params: {
+    results: number;
+  };
+}
+
+const config: ConfigType = {
   method: "get",
   url: "https://randomuser.me/api/",
   params: {
@@ -14,11 +22,11 @@ const config = {
   },
 };
 
-export const getUsers = (addOnlyOneUser = false) => {
-  return (dispatch) => {
+export const getUsers = (addOnlyOneUser: boolean = false) => {
+  return (dispatch: any) => {
     dispatch(fetchRequested());
     axios(config)
-      .then((response) => {
+      .then((response: any) => {
         if (addOnlyOneUser) {
           dispatch(addUser(response.data.results[0]));
           return;
