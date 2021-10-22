@@ -16,11 +16,9 @@ const Home = ({
   showMessage,
 }) => {
   if (isLoading) {
-    showMessage("info", "loading");
+    showMessage("success", "loading");
   } else if (isError) {
-    showMessage("danger", errorMessage);
-  } else {
-    showMessage("", "");
+    showMessage("error", errorMessage);
   }
   const fetchData = () => {
     getUsers();

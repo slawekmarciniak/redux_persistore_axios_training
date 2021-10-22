@@ -1,21 +1,60 @@
 import "./styles.css";
+import { useState, useEffect } from "react";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+import { showMessage } from "../../redux/actions/messageActions";
+import { connect } from "react-redux";
 
-const Message = ({ type, message }) => {
-  const color = (type) => {
-    if (type === "info") {
-      return "#2ecc71";
-    } else if (type === "warning") {
-      return "#f1c40f";
-    } else if (type === "danger") {
-      return "#e74c3c";
-    }
+const Message = ({ type, message, showMessage }) => {
+  const [open, setOpen] = useState(false);
+  const vertical = "bottom";
+  const horizontal = "center";
+
+  useEffect(() => {
+    const openMessage = () => {
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+        showMessage("", "");
+      }, 2000);
+    };
+    openMessage();
+  }, [showMessage]);
+
+  const handleClose = () => {
+    setOpen(false);
+    showMessage("", "");
   };
 
   return (
-    <div className="messageContainer">
-      <div style={{ backgroundColor: color(type) }}>{message}</div>
-    </div>
+    <>
+      <Snackbar
+        anchorOrigin={{ horizontal, vertical }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <MuiAlert
+          onClose={handleClose}
+          variant="filled"
+          severity={type}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </MuiAlert>
+      </Snackbar>
+    </>
   );
 };
 
-export default Message;
+const mapDispatchToProps = (dispatch) => ({
+  showMessage: (type, message) =>
+    dispatch(
+      showMessage({
+        type,
+        message,
+      })
+    ),
+});
+
+export default connect(null, mapDispatchToProps)(Message);

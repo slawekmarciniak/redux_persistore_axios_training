@@ -15,21 +15,19 @@ const Users = ({
   showMessage,
 }) => {
   useEffect(() => {
-    if (users.length < 10) {
+    if (!users.length) {
       getUsers();
     }
   }, [getUsers, users.length]);
-
   if (isLoading) {
-    showMessage("info", "loading");
+    showMessage("success", "loading");
   } else if (isError) {
     showMessage("danger", errorMessage);
-  } else showMessage("", "");
-
+  }
   return (
     <div>
       <h4 className="users">Users:</h4>
-      {users.length > 0 && <UsersList users={users} />}
+      {users.length && <UsersList users={users} />}
     </div>
   );
 };
