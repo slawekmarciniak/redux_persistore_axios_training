@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { getUsers } from "../../api/usersApi";
 import { resetUsers } from "../../redux/actions/usersActions";
 import { showMessage } from "../../redux/actions/messageActions";
+import { useEffect } from "react";
 
 const Home = ({
   getUsers,
@@ -15,12 +16,16 @@ const Home = ({
   errorMessage,
   showMessage,
 }) => {
-  if (isLoading) {
-    showMessage("success", "loading");
-  } else if (isError) {
-    showMessage("error", errorMessage);
-  }
+  useEffect(() => {
+    if (isLoading) {
+      showMessage("success", "loading");
+    } else if (isError) {
+      showMessage("error", errorMessage);
+    }
+  }, []);
+
   const fetchData = () => {
+    // showMessage("success", "loading");
     getUsers();
   };
   const resetUsersList = () => {

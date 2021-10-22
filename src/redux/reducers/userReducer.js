@@ -24,7 +24,6 @@ export default function usersReducer(state = INITIAL_STATE, action) {
       });
     case GET_USERS_SUCCEDED:
       return (state = {
-        ...state,
         users: action.payload,
         isLoading: false,
         isError: false,
@@ -45,7 +44,6 @@ export default function usersReducer(state = INITIAL_STATE, action) {
       });
     case ADD_USER_TO_LIST:
       return (state = {
-        ...state,
         users: [action.payload, ...state.users],
         isLoading: false,
         isError: false,
