@@ -4,7 +4,12 @@ import Button from "@mui/material/Button";
 import { getUsers } from "../../api/usersApi";
 import { resetUsers } from "../../redux/actions/usersActions";
 import { showMessage } from "../../redux/actions/messageActions";
-import { useEffect } from "react";
+import {
+  userSelector,
+  isLoadingSelector,
+  isErrorSelector,
+  errorMessageSelector,
+} from "../../redux/selectors";
 
 const Home = ({
   getUsers,
@@ -16,17 +21,12 @@ const Home = ({
   errorMessage,
   showMessage,
 }) => {
-  useEffect(() => {
-    if (isLoading) {
-      showMessage("success", "loading");
-    } else if (isError) {
+  const fetchData = () => {
+    showMessage("success", "loading");
+    getUsers();
+    if (isError) {
       showMessage("error", errorMessage);
     }
-  }, []);
-
-  const fetchData = () => {
-    // showMessage("success", "loading");
-    getUsers();
   };
   const resetUsersList = () => {
     showMessage("warning", "users list is cleared");
@@ -67,10 +67,10 @@ const Home = ({
 };
 
 const mapStateToProps = (state) => ({
-  users: state.users.users,
-  isLoading: state.users.isLoading,
-  isError: state.users.isError,
-  errorMessage: state.users.errorMessage,
+  users: userSelector(state),
+  isLoading: isLoadingSelector(state),
+  isError: isErrorSelector(state),
+  errorMessage: errorMessageSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -6,6 +6,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Message from "./components/Message";
 import Contact from "./components/Contact/Contact";
+import {
+  messageTypeSelector,
+  messageSelector,
+  isLoadingSelector,
+} from "./redux/selectors";
 
 function App({ type, message }) {
   return (
@@ -28,12 +33,6 @@ function App({ type, message }) {
     </Router>
   );
 }
-
-const messageTypeSelector = (state) =>
-  state.message.message[0] ? state.message.message[0].type : null;
-const messageSelector = (state) =>
-  state.message.message[0].message ? state.message.message[0].message : null;
-const isLoadingSelector = (state) => state.users.isLoading;
 
 const mapStateToProps = (state) => ({
   type: messageTypeSelector(state),

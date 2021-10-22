@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { getUsers } from "../../../api/usersApi";
 import { showMessage } from "../../../redux/actions/messageActions";
-
+import {
+  userSelector,
+  isLoadingSelector,
+  isErrorSelector,
+  errorMessageSelector,
+} from "../../../redux/selectors";
 import UsersList from "../components/UsersList";
 import "../styles.css";
 
@@ -18,25 +23,26 @@ const Users = ({
     if (users.length < 1) {
       getUsers();
     }
-  }, [getUsers, users.length]);
+  }, [getUsers, users, isError]);
+
   if (isLoading) {
     showMessage("success", "loading");
   } else if (isError) {
-    showMessage("danger", errorMessage);
+    showMessage("error", errorMessage);
   }
   return (
     <div>
       <h4 className="users">Users:</h4>
-      {users.length > 0 && <UsersList users={users} />}
+      {users && <UsersList users={users} />}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  users: state.users.users,
-  isLoading: state.users.isLoading,
-  isError: state.users.isError,
-  errorMessage: state.users.errorMessage,
+  users: userSelector(state),
+  isLoading: isLoadingSelector(state),
+  isError: isErrorSelector(state),
+  errorMessage: errorMessageSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

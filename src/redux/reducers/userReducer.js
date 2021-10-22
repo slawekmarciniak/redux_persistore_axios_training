@@ -38,7 +38,8 @@ export default function usersReducer(state = INITIAL_STATE, action) {
       });
     case RESET_USERS:
       return (state = {
-        ...state,
+        isLoading: false,
+        isError: false,
         users: [],
         errorMessage: "",
       });

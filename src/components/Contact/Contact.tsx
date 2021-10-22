@@ -31,7 +31,6 @@ const Contact: FC<ContactProps> = ({ sendingMessage }) => {
       sendingMessage("", "");
     }, 1000);
     sendEmail(data);
-    console.log(data);
     reset();
   };
 
